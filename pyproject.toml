@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 httpx = "^0.28.1"
+inquirerpy = "^0.3.4"
 
 
 [tool.poetry.group.dev.dependencies]
