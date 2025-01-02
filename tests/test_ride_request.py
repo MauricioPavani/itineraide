@@ -24,6 +24,7 @@ def test_status_code_200_ride_request():
                         {
                             'name': "A Pirate's Adventure ~ Treasures of the Seven Seas",
                             'wait_time': 0,
+                            'is_open': True,
                         }
                     ]
                 }
@@ -42,6 +43,30 @@ def test_status_code_200_ride_request():
 @respx.mock
 def test_status_code_error_ride_request():
     mocked_responce = Response(408)  # Timeout status code
+
+    respx.get(ride_request.URL.format(6)).mock(mocked_responce)
+    response = ride_request.list_rides()
+    assert response == {}
+
+
+@respx.mock
+def test_status_is_open_ride_request():
+    mocked_responce = Response(
+        200,
+        json={
+            'lands': [
+                {
+                    'rides': [
+                        {
+                            'name': "A Pirate's Adventure ~ Treasures of the Seven Seas",
+                            'wait_time': 0,
+                            'is_open': False,
+                        }
+                    ]
+                }
+            ]
+        },
+    )
 
     respx.get(ride_request.URL.format(6)).mock(mocked_responce)
     response = ride_request.list_rides()

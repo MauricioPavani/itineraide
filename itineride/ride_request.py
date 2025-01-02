@@ -20,6 +20,7 @@ def list_rides(park_id: int = 6) -> dict[str, int]:
     if response.status_code == 200:
         for land in response.json()['lands']:
             for ride in land['rides']:
-                rides[ride['name']] = ride['wait_time']
+                if ride['is_open']:
+                    rides[ride['name']] = ride['wait_time']
 
     return rides
